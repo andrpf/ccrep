@@ -1,0 +1,69 @@
+﻿@using CcRep.Helpers
+@using CcRep.Helpers.BreadCrumbs
+
+@model CcRep.Models.dic.Keyword
+
+@{
+    ViewBag.Title = "Удалить ключевое слово";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    Crumbs breadCrumbs = CrumbsProvider.ForDirectories();
+    breadCrumbs.AddRange(new Crumbs {
+        new Crumb {Name = "Ключевые слова" },
+        new Crumb {Name = "Удалить" },
+        new Crumb {Name = Model.Key_word },
+    });
+}
+
+@Html.BreadCrumbs(breadCrumbs, (string)ViewBag.Title)
+
+@using (Html.BeginCard("Подтверждение удалиния слова: " + Model.Key_word))
+{
+    <h3>Вы уверены, что хотите это удалить?</h3>
+    <br />
+    <div>
+        <dl>
+            <dt>
+                @Html.DisplayNameFor(model => model.Key_word)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Key_word)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.BegDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.BegDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.EndDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EndDate)
+            </dd>
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <button type="submit" class="btn btn-danger"><i class="la la-remove"></i>&nbsp; Удалить &nbsp;</button>
+                <button href="@Url.Action("Index")" type="button" class="btn btn-secondary"><i class="la la-list"></i>&nbsp; Перейти к списку &nbsp;</button>
+            </div>
+        }
+    </div>
+}

@@ -1,0 +1,36 @@
+﻿@using System.Web.Mvc.Html;
+@model string
+
+<div class="modal animated fade text-left" id="@Model" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="myModalLabel2"><i class="la la-road2"></i> Выберите нужные значения для фильтров</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col">
+                        <div id="builderQuery"></div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Отмена</button>
+                        <button type="button" class="resetQueryFilters btn orange btn-outline-primary">Сбросить</button>
+                        <button type="button" class="applyQueryFilters toLink btn btn-outline-primary">Применить</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

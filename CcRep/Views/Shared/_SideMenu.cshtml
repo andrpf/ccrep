@@ -1,0 +1,213 @@
+﻿<div class="main-menu menu-fixed menu-light menu-accordion menu-shadow " data-scroll-to-active="true">
+    <div class="main-menu-content">
+        <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+
+            <li class=" navigation-header">
+                <span><em>Администрирование</em></span>
+                <i class="la la-ellipsis-h ft-minus" data-toggle="tooltip" data-placement="right" data-original-title="Администрирование"></i>
+            </li>
+            <li class=" nav-item">
+                <a href="#"><i class="la la-columns"></i><span class="menu-title" data-i18n="nav.page_layouts.main">Справочники</span></a>
+                <ul class="menu-content">
+                    <li>
+                        <a class="menu-item" href="#" data-i18n="nav.page_layouts.1_column">Балансы 2го порядка</a>
+
+                        <ul class="menu-content">
+
+                            <li>
+                                @Html.ActionLink("Список", "Index", "AcctReports", new { Area = "Directories" }, new { Class = "menu_item" })
+                            </li>
+
+                            <li>
+                                @Html.ActionLink("Добавить", "Create", "AcctReports", new { Area = "Directories" }, new { Class = "menu_item" })
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a class="menu-item" href="#" data-i18n="nav.page_layouts.1_column">Типы клиентов</a>
+
+                        <ul class="menu-content">
+
+                            <li>
+                                @Html.ActionLink("Список", "Index", "ClientTypes", new { Area = "Directories" }, new { Class = "menu_item" })
+                            </li>
+
+                            <li>
+                                @Html.ActionLink("Добавить", "Create", "ClientTypes", new { Area = "Directories" }, new { Class = "menu_item" })
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a class="menu-item" href="#" data-i18n="nav.page_layouts.1_column">Счета клиентов</a>
+
+                        <ul class="menu-content">
+
+                            <li>
+                                @Html.ActionLink("Список", "Index", "AccountClients", new { Area = "Directories" }, new { Class = "menu_item" })
+                            </li>
+
+                            <li>
+                                @Html.ActionLink("Добавить", "Create", "AccountClients", new { Area = "Directories" }, new { Class = "menu_item" })
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a class="menu-item" href="#" data-i18n="nav.page_layouts.1_column">Ключевые слова</a>
+
+                        <ul class="menu-content">
+
+                            <li>
+                                @Html.ActionLink("Список", "Index", "Keywords", new { Area = "Directories" }, new { Class = "menu_item" })
+                            </li>
+
+                            <li>
+                                @Html.ActionLink("Добавить", "Create", "Keywords", new { Area = "Directories" }, new { Class = "menu_item" })
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a class="menu-item" href="#" data-i18n="nav.page_layouts.1_column">Слова исключения</a>
+
+                        <ul class="menu-content">
+
+                            <li>
+                                @Html.ActionLink("Список", "Index", "KeywordsExceptions", new { Area = "Directories" }, new { Class = "menu_item" })
+                            </li>
+
+                            <li>
+                                @Html.ActionLink("Добавить", "Create", "KeywordsExceptions", new { Area = "Directories" }, new { Class = "menu_item" })
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a class="menu-item" href="#" data-i18n="nav.page_layouts.1_column">Коды инструментов</a>
+
+                        <ul class="menu-content">
+
+                            <li>
+                                @Html.ActionLink("Список", "Index", "CodeToolings", new { Area = "Directories" }, new { Class = "menu_item" })
+                            </li>
+
+                            <li>
+                                @Html.ActionLink("Добавить", "Create", "CodeToolings", new { Area = "Directories" }, new { Class = "menu_item" })
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a class="menu-item" href="#" data-i18n="nav.page_layouts.1_column">Коды видов операций</a>
+
+                        <ul class="menu-content">
+
+                            <li>
+                                @Html.ActionLink("Список", "Index", "OperTypes", new { Area = "Directories" }, new { Class = "menu_item" })
+
+                            </li>
+
+                            <li>
+                                @Html.ActionLink("Добавить", "Create", "OperTypes", new { Area = "Directories" }, new { Class = "menu_item" })
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a class="menu-item" href="#" data-i18n="nav.page_layouts.1_column">Виды ПД</a>
+
+                        <ul class="menu-content">
+
+                            <li>
+                                @Html.ActionLink("Список", "Index", "PDTypes", new { Area = "Directories" }, new { Class = "menu_item" })
+                            </li>
+
+                            <li>
+                                @Html.ActionLink("Добавить", "Create", "PDTypes", new { Area = "Directories" }, new { Class = "menu_item" })
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="menu-item" href="#" data-i18n="nav.page_layouts.1_column">Коды 405/406</a>
+
+                        <ul class="menu-content">
+
+                            <li>
+                                @Html.ActionLink("Список", "Index", "SettingCodeVOes", new { Area = "Directories" }, new { Class = "menu_item" })
+                            </li>
+
+                            <li>
+                                @Html.ActionLink("Добавить", "Create", "SettingCodeVOes", new { Area = "Directories" }, new { Class = "menu_item" })
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li class=" navigation-header">
+                <span><em>Пользователи и роли</em></span>
+                <i class="la la-ellipsis-h ft-minus" data-toggle="tooltip" data-placement="right" data-original-title="Администрирование"></i>
+            </li>
+            <li class="nav-item nav-link">
+                <a href="@Url.Action("Index", "CcRepUsers", new { Area = "System" })">
+                    <i class="la la-users"></i>
+                    <span class="menu-title"> Список </span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="/Account/AddUser">
+                    <i class="la la-user-plus"></i>
+                    <span class="menu-title">Создать</span>
+                </a>
+            </li>
+
+            <li class=" navigation-header">
+                <span><em>Работа с отчетом</em></span>
+                <i class="la la-ellipsis-h ft-minus" data-toggle="tooltip" data-placement="right" data-original-title="Работа с отчетами"></i>
+            </li>
+            <li class="nav-item">
+                <a href="@Url.Action("Create", "HeaderReps", new { Area = "Reports" })">
+                    <i class="la la-plus-circle"></i>
+                    <span class="menu-title"> Создать новый </span>
+                </a>
+            </li>
+
+            <li class=" nav-item">
+                <a href="#"><i class="la la-clipboard"></i><span class="menu-title" data-i18n="nav.page_layouts.main">Список отчетов</span></a>
+                <ul class="menu-content">
+                    <li class="">
+                        <a href="@Url.Action("Index", "HeaderReps", new { Area = "Reports" })">
+                            <span class="menu-title"> Все </span>
+                        </a>
+                    </li>
+                    <li class="disabled">
+                        <a href="@Url.Action("Active", "HeaderReps", new { Area = "Reports" })">
+                            <span class="menu-title"> Активный </span>
+                        </a>
+                    </li>
+                    <li class="disabled">
+                        <a href="@Url.Action("Archive", "HeaderReps", new { Area = "Reports" })">
+                            <span class="menu-title"> Архив </span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item">
+                <a href="@Url.Action("LoadFromDwhList", "HeaderReps", new { Area = "Reports" })">
+                    <i class="la la-download"></i>
+                    <span class="menu-title"> Загрузка из DWH </span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="@Url.Action("ToArchiveList", "HeaderReps", new { Area = "Reports" })">
+                    <i class="la la-archive"></i>
+                    <span class="menu-title"> Перенос в архив </span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

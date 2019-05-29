@@ -1,0 +1,22 @@
+﻿@using CcRep.Helpers
+@using CcRep.Helpers.BreadCrumbs
+
+@model CcRep.Models.dic.SettingCodeVO
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    Crumbs breadCrumbs = CrumbsProvider.ForDirectories();
+    breadCrumbs.AddRange(new Crumbs {
+        new Crumb {Name = "Коды 405/406" },
+        new Crumb {Name = "Изменить" },
+        new Crumb {Name = Model.CodeVO }
+    });
+}
+
+@Html.BreadCrumbs(breadCrumbs, (string)ViewBag.Title)
+
+@using (Html.BeginCard("Изменение код: " + Model.CodeVO))
+{
+    @Html.Partial("_form", Model)
+}

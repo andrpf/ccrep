@@ -1,0 +1,40 @@
+﻿@using CcRep.Helpers
+@using CcRep.Helpers.BreadCrumbs
+
+@model IEnumerable<CcRep.Models.dic.ClientType>
+
+@{
+    ViewBag.Title = "Система отчетности ВК";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    Crumbs test = new Crumbs {
+        new Crumb {Name = "Главная страница" }
+    };
+}
+
+@Html.BreadCrumbs(test, "Система отчетности")
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="card">
+            <div class="card-header"></div>
+            <div class="card-content">
+                <div class="card-body">
+                    <div class="carousel slide" data-ride="carousel">
+                        <!-- The slideshow -->
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img style="max-height:100%; height:auto;" src="~/Content/images/carousel/1.jpg" alt="Los Angeles">
+                                <div class="carousel-caption caption-high">
+                                    <h3 class="text-danger">Юникредит Банк</h3>
+                                    <p>Добро пожаловать!</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

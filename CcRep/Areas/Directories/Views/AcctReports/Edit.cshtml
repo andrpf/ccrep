@@ -1,0 +1,89 @@
+﻿@using CcRep.Helpers
+@using CcRep.Helpers.BreadCrumbs
+@using CcRep.Models.dic
+
+@model CcRep.Models.dic.AcctReport
+
+@{
+    ViewBag.Title = "Изменить баланс - " + Model.Acc2;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    Crumbs breadCrumbs = CrumbsProvider.ForDirectories();
+    breadCrumbs.AddRange(new Crumbs {
+        new Crumb {Name = "Балансы второго порядка" },
+        new Crumb {Name = "Изменить" },
+        new Crumb {Name = Model.Acc2 }
+    });
+}
+
+@Html.BreadCrumbs(breadCrumbs, "Изменить Баланс второго порядка")
+
+@using (Html.BeginCard("Изменение баланса: " + Model.Acc2))
+{
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Acc2, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Acc2, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Acc2, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Resident, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.Resident)
+                        @Html.ValidationMessageFor(model => model.Resident, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CntrPartner, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.CntrPartner)
+                        @Html.ValidationMessageFor(model => model.CntrPartner, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    <div class="editor-label">Типы клиента</div>
+
+                    @foreach (ClientType c in ViewBag.ClientTypes)
+                    {
+                        <fieldset>
+                            <input type="checkbox" name="selectedClientTypes" value="@c.Id"
+                                   @(Model.ClientTypes.Contains(c) ? "checked=\"checked\"" : "") />
+                            <label>@c.NameShort</label>
+
+                        </fieldset>
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="submit" class="btn btn-info">
+                        <i class="la la-refresh"></i>&nbsp; Сохранить изменения &nbsp;
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+    <div class="col-md-offset-2 col-md-10">
+        @Html.ActionLink("Перейти к списку", "Index")
+    </div>
+}

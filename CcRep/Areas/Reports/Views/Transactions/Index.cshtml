@@ -1,0 +1,174 @@
+﻿@using CcRep.Helpers
+@using CcRep.Helpers.BreadCrumbs
+@using CcRep.Areas.Reports.Models
+
+@model TranIndexViewModel
+
+@{
+    ViewBag.Title = "Работа с операциями отчета";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    Crumbs breadCrumbs = new Crumbs {
+        new Crumb {Name = "Работа с отчетом" },
+        new Crumb {Name = Model.Report.Name },
+        new Crumb {Name = "Операции" }
+    };
+}
+
+@Html.BreadCrumbs(breadCrumbs, (string)ViewBag.Title)
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-content">
+                <div class="card-body">
+                    <div class="media d-flex">
+                        <div class="media-body text-left">
+                            <h3 class="primary">Отчет за @Model.Report.Name</h3>
+                            <span>@Model.Report.Comment</span>
+                        </div>
+
+                        <div class="align-self-center">
+                            <i class="la la-file-text primary font-large-2 float-right"></i>
+                        </div>
+                    </div>
+                    <br /><br />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginCard("Список операций", cssClass: "box-body"))
+{
+    @Html.Partial("_tran_table", Model)
+}
+
+@Html.Partial("_filt_modal", "iconModal")
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                type: "GET",
+                url: "/Reports/api/Transactions/GridFiltersAndRules",
+            }).done(function (data) {
+                var event = jQuery.Event('LoadQBFilters');
+
+                $('#iconModal').trigger(event);
+
+                filter.init('builderQuery', data);
+
+                function findRules() {
+                    var rules = $('#builderQuery').queryBuilder('getRules');
+
+                    if (rules) {
+                        return rules.rules;
+                    }
+                    else {
+                        return rules;
+                    }
+                }
+
+                $(".resetQueryFilters").on("click", function () {
+                    $('#builderQuery').queryBuilder('reset');
+                });
+
+                $(".applyQueryFilters").on("click", function (event) {
+
+                    if (filter.builder.queryBuilder('validate')) {
+                        $('#iconModal').modal("hide");
+                        filter.applyFiltersFunc();
+                    }
+                });
+
+            });
+        });
+
+        $('#iconModal').on('LoadQBFilters', function () {
+            $('.DicTableList').on('init.dt', function () {
+                $('.filtButt').attr('data-toggle', 'modal').attr('data-target', '#iconModal');
+            });
+
+            window.defaultDTable = $('.DicTableList').DataTable({
+                "sScrollX": "100%",
+                "bScrollCollapse": true,
+                    processing: true,
+                    serverSide: true,
+                    ajax: {
+                        "url": "/Reports/api/Transactions/GetData",
+                        "type": "POST",
+                        "contentType": "application/json; charset=utf-8",
+                        "dataType": "json",
+
+                        "data": function (result) {
+                            console.log(result);
+                            var rullez = filter.getRules();
+
+                            var newresult = {
+                                Rules: rullez ? rullez : [],
+                                ReportId: @Model.Report.Id,
+                                PageLength: result.length,
+                                StartRowNo: result.start,
+                                OrderRules: result.order
+                            };
+                            console.log(newresult);
+                            return JSON.stringify(newresult);
+                        }
+                    },
+                    searching: false,
+                    language: {
+                        url: '/Content/lang/datatables_ru.json'
+                    },
+
+                    buttons: [
+                        {
+                            className: 'filtButt btn btn-outline-info btn-min-width mr-1 mb-1',
+                            text: '<i class="la la-filter"></i> '+'Фильтр',
+                        },
+                        {
+                            extend: 'colvis',
+                            order: 'alpha',
+                            className: 'btn btn-secondary btn-outline-info btn-min-width mr-1 mb-1',
+                            columns: [':not(.no-hide)'],
+                            text: 'Показать/Скрыть колонки'
+                        },
+                        {
+                            className: 'btn btn-outline-info btn-min-width mr-1 mb-1',
+                            text: '<i class="la la-plus"></i> ' + 'Создать Операцию',
+                            action: function (e, dt, button, config) {
+                                window.location = '@Url.Action("Create", new { id = Model.Report.Id })'
+                            }
+                        }
+                    ],
+                    dom: 'Blfrtip',
+                    stateSave: true,
+                    pageLength: 35,
+                    bLengthChange: false,
+                    columnDefs: [
+                        {
+                            render: function (data, type, full, meta) {
+                                var wrappedDataClass = "border-warning warning";
+
+                                return "<a data-toggle='tooltip' data-popup='tooltip-custom' data-original-title='Посмотреть' href='/Reports/Transactions/Details/" + data + "'><i class='ft-eye'></i></a>";
+                            },
+                            targets: -1
+                        },
+                        {
+                            "targets": 'no-sort',
+                            "orderable": false,
+                        },
+                        { targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, -1], visible: true },
+                        { targets: '_all', visible: false }
+                    ]
+
+            });
+
+            function applyFilterRules(rules) {
+                defaultDTable.ajax.reload();
+            }
+
+            filter.applyFiltersFunc = applyFilterRules;
+        });
+    </script>
+}

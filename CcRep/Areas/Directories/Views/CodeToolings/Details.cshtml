@@ -1,0 +1,65 @@
+﻿@using CcRep.Helpers
+@using CcRep.Helpers.BreadCrumbs
+@model CcRep.Models.dic.CodeTooling
+
+@{
+    ViewBag.Title = "Информация о коде инструмента";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    Crumbs breadCrumbs = CrumbsProvider.ForDirectories();
+    breadCrumbs.AddRange(new Crumbs {
+        new Crumb {Name = "Коды инструментов" },
+        new Crumb {Name = "Информация о записи" },
+        new Crumb {Name = Model.TypeTooling },
+    });
+}
+
+@Html.BreadCrumbs(breadCrumbs, (string)ViewBag.Title)
+
+@using (Html.BeginCard("Информация о коде: " + Model.TypeTooling))
+{
+    <div>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.TypeTooling)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TypeTooling)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DescTooling)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DescTooling)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.BegDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.BegDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.EndDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EndDate)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        <div class="form-group">
+            <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                <button href="@Url.Action("Edit", new { id = Model.Id })" type="button" class="btn btn-cyan">Изменить</button>
+                <button href="@Url.Action("Index")" type="button" class="btn btn-info">Перейти к списку</button>
+            </div>
+        </div>
+    </p>
+}

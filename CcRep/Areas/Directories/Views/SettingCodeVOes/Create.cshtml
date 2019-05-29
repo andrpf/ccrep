@@ -1,0 +1,23 @@
+﻿@using CcRep.Helpers
+@using CcRep.Helpers.BreadCrumbs
+
+@model CcRep.Models.dic.SettingCodeVO
+
+@{
+    ViewBag.isEdit = false;
+    ViewBag.Title = "Создать код 405/406";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    Crumbs breadCrumbs = CrumbsProvider.ForDirectories();
+    breadCrumbs.AddRange(new Crumbs {
+        new Crumb {Name = "Коды 405/406" },
+        new Crumb {Name = "Создать" }
+    });
+}
+
+@Html.BreadCrumbs(breadCrumbs, (string)ViewBag.Title)
+
+@using (Html.BeginCard("Форма новой сущности"))
+{
+    @Html.Partial("_form", Model)
+}

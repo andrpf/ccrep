@@ -1,0 +1,71 @@
+﻿@using CcRep.Helpers
+@using CcRep.Helpers.BreadCrumbs
+@model CcRep.Models.dic.PDType
+
+@{
+    ViewBag.Title = "Создать вид подтверждающего документа";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    Crumbs breadCrumbs = CrumbsProvider.ForDirectories();
+    breadCrumbs.AddRange(new Crumbs {
+        new Crumb {Name = "Виды подтверждающих документов" },
+        new Crumb {Name = "Создать" }
+    });
+}
+
+@Html.BreadCrumbs(breadCrumbs, (string)ViewBag.Title)
+
+@using (Html.BeginCard("Форма новой сущности"))
+{
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.CodePD, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CodePD, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CodePD, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DescCodePD, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.DescCodePD, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.DescCodePD, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.BegDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.BegDate, new { htmlAttributes = new { @class = "date-picker form-control" } })
+                    @Html.ValidationMessageFor(model => model.BegDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "date-picker form-control" } })
+                    @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="submit" class="btn btn-info">
+                        <i class="la la-check"></i>&nbsp; Создать &nbsp;
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="col-md-offset-2 col-md-10">
+        @Html.ActionLink("Перейти к списку", "Index")
+    </div>
+}

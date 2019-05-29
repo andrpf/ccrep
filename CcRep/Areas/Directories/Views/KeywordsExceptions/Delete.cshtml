@@ -1,0 +1,44 @@
+﻿@using CcRep.Helpers
+@using CcRep.Helpers.BreadCrumbs
+@model CcRep.Models.dic.KeywordsException
+
+@{
+    ViewBag.Title = "Удалить слово исключение";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    Crumbs breadCrumbs = CrumbsProvider.ForDirectories();
+    breadCrumbs.AddRange(new Crumbs {
+        new Crumb {Name = "Слова исключения" },
+        new Crumb {Name = "Удалить" },
+        new Crumb {Name = Model.Keyword },
+    });
+}
+
+@Html.BreadCrumbs(breadCrumbs, (string)ViewBag.Title)
+
+@using (Html.BeginCard("Подтверждение удалиния слова: " + Model.Keyword))
+{
+    <h3>Вы уверены, что хотите это удалить?</h3>
+    <br/>
+    <div>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Keyword)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Keyword)
+            </dd>
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <button type="submit" class="btn btn-danger"><i class="la la-remove"></i>&nbsp; Удалить &nbsp;</button>
+                <button href="@Url.Action("Index")" type="button" class="btn btn-secondary"><i class="la la-list"></i>&nbsp; Перейти к списку &nbsp;</button>
+            </div>
+        }
+    </div>
+}

@@ -1,0 +1,142 @@
+﻿@using CcRep.Helpers
+@using CcRep.Helpers.BreadCrumbs
+@using CcRep.Areas.System.ViewModels
+
+@{
+    ViewBag.Title = "ManageUserAccess";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    Crumbs breadCrumbs = new Crumbs {
+        new Crumb {Name = "Администрирование" },
+        new Crumb {Name = "Пользователи" },
+        new Crumb {Name = "Управление доступом" }
+    };
+
+    ViewBag.Title = "Настройка доступов пользователя";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    @model CcRep.Areas.System.ViewModels.UserAccessAssignment
+}
+
+@Html.BreadCrumbs(breadCrumbs, (string)ViewBag.Title)
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.UserId)
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body text-left">
+                                    <h3 class="primary">@Model.UserName</h3>
+                                    <span>@Model.UserFullName</span>
+                                </div>
+
+                                <div class="align-self-center">
+                                    <i class="la la-user-secret primary font-large-2 float-right"></i>
+                                </div>
+                            </div>
+                            <br /><br />
+                            <div class="row">
+                                <div class="col-md">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.FlAccess, htmlAttributes: new { @class = "control-label" })
+                                        <div class="checkbox">
+                                            @Html.DropDownListFor(model => model.FlAccess, Model.FlSelectList, new { @class = "select2" })
+                                            @Html.ValidationMessageFor(model => model.FlAccess, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.PdAccess, htmlAttributes: new { @class = "control-label" })
+                                        <div class="checkbox">
+                                            @Html.DropDownListFor(model => model.PdAccess, Model.PdSelectList, new { @class = "select2" })
+                                            @Html.ValidationMessageFor(model => model.PdAccess, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Blocked, htmlAttributes: new { @class = "control-label" })
+                                        <div class="">
+                                            @Html.EditorFor(model => model.Blocked, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.Blocked, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @using (Html.BeginCard("Филиалы"))
+        {
+            <div class="row">
+                <div class="col-md">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.AllBranches, htmlAttributes: new { @class = "control-label" })
+                        <div class="">
+                            @Html.EditorFor(model => model.AllBranches, new { htmlAttributes = new { data_listboxcont = "allBranchContainer", @class = "disableListBox form-control" } })
+                            @Html.ValidationMessageFor(model => model.AllBranches, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group allBranchContainer">
+
+                        @Html.ListBoxFor(m => m.SelectedBranches, Model.Branches, new { @class = "vertical-scroll duallistbox-multi-selection", style = "width:100%;" })
+
+                    </div>
+                </div>
+            </div>
+        }
+        @using (Html.BeginCard("Роли"))
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+
+                        @Html.ListBoxFor(m => m.SelectedRoles, Model.Roles, new { @class = "duallistbox-multi-selection", style = "width:100%;" })
+
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="row">
+            <div class="col-md-10">
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="pull-right btn btn-primary btn-min-width mb-3"><i class="la la-save"></i> Сохранить</button>
+            </div>
+
+        </div>
+    </div>
+}
+
+@section scripts{
+    <script>
+        $('.bootstrap-duallistbox-container select').perfectScrollbar({
+            suppressScrollX: true,
+            suppressScrollY: true,
+            theme: 'dark',
+            wheelPropagation: true
+        });
+    </script>
+}
+
+

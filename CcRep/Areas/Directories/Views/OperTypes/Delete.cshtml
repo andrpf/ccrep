@@ -1,0 +1,52 @@
+﻿@using CcRep.Helpers
+@using CcRep.Helpers.BreadCrumbs
+
+@model CcRep.Models.dic.OperType
+
+@{
+    ViewBag.Title = "Удалить код вида операции";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    Crumbs breadCrumbs = CrumbsProvider.ForDirectories();
+    breadCrumbs.AddRange(new Crumbs {
+        new Crumb {Name = "Коды видов операций" },
+        new Crumb {Name = "Удалить" },
+        new Crumb {Name = Convert.ToString(Model.Oper_Type) },
+    });
+}
+
+@Html.BreadCrumbs(breadCrumbs, (string)ViewBag.Title)
+
+@using (Html.BeginCard("Подтверждение удалиния кода: " + Model.Oper_Type))
+{
+    <h3>Вы уверены, что хотите это удалить?</h3>
+    <br />
+    <div>
+        <dl>
+            <dt>
+                @Html.DisplayNameFor(model => model.Oper_Type)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Oper_Type)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.OperTypeDesc)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.OperTypeDesc)
+            </dd>
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <button type="submit" class="btn btn-danger"><i class="la la-remove"></i>&nbsp; Удалить &nbsp;</button>
+                <button href="@Url.Action("Index")" type="button" class="btn btn-secondary"><i class="la la-list"></i>&nbsp; Перейти к списку &nbsp;</button>
+            </div> }
+    </div>
+}

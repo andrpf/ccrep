@@ -1,0 +1,48 @@
+﻿@using CcRep.Helpers
+@using CcRep.Helpers.BreadCrumbs
+@model CcRep.Models.dic.OperType
+
+@{
+    Crumbs breadCrumbs = CrumbsProvider.ForDirectories();
+    breadCrumbs.AddRange(new Crumbs {
+        new Crumb {Name = "Коды видов операций" },
+        new Crumb {Name = "Информация о записи" },
+        new Crumb {Name = Convert.ToString(Model.Oper_Type) },
+    });
+
+    ViewBag.Title = "Информация о коде вида операции";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.BreadCrumbs(breadCrumbs, (string)ViewBag.Title)
+
+@using (Html.BeginCard("Информация о коде: " + Model.Oper_Type))
+{
+    <div>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Oper_Type)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Oper_Type)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.OperTypeDesc)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.OperTypeDesc)
+            </dd>
+        </dl>
+    </div>
+    <p>
+        <div class="form-group">
+            <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                <button href="@Url.Action("Edit", new { id = Model.Id })" type="button" class="btn btn-cyan">Изменить</button>
+                <button href="@Url.Action("Index")" type="button" class="btn btn-info">Перейти к списку</button>
+            </div>
+        </div>
+    </p>
+}

@@ -1,0 +1,42 @@
+﻿@using CcRep.Helpers
+@using CcRep.Helpers.BreadCrumbs
+@model CcRep.Models.dic.KeywordsException
+
+@{
+    ViewBag.Title = "Информация о слове исключении";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    Crumbs breadCrumbs = CrumbsProvider.ForDirectories();
+    breadCrumbs.AddRange(new Crumbs {
+        new Crumb {Name = "Слова исключения" },
+        new Crumb {Name = "Информация о записи" },
+        new Crumb {Name = Model.Keyword },
+    });
+
+}
+
+@Html.BreadCrumbs(breadCrumbs, (string)ViewBag.Title)
+
+@using (Html.BeginCard("Информация о слове: " + Model.Keyword))
+{
+    <div>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Keyword)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Keyword)
+            </dd>
+
+        </dl>
+    </div>
+
+    <div class="form-group">
+        <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+            <button href="@Url.Action("Edit", new { id = Model.Id })" type="button" class="btn btn-cyan">Изменить</button>
+            <button href="@Url.Action("Index")" type="button" class="btn btn-info">Перейти к списку</button>
+        </div>
+    </div>
+}
+

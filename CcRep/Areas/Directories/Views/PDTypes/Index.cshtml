@@ -1,0 +1,72 @@
+﻿@using CcRep.Helpers
+@using CcRep.Helpers.BreadCrumbs
+@model IEnumerable<CcRep.Models.dic.PDType>
+
+@{
+    ViewBag.Title = "Подтверждающие документы";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    Crumbs breadCrumbs = CrumbsProvider.ForDirectories();
+    breadCrumbs.AddRange(new Crumbs {
+        new Crumb {Name = "Виды подтверждающих документов" },
+        new Crumb {Name = "Список" }
+    });
+}
+
+@Html.BreadCrumbs(breadCrumbs, (string)ViewBag.Title)
+
+@using (Html.BeginCard("Список доступных сущностей"))
+{
+    <table class="DicTableList table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.CodePD)
+                </th>
+                <th style="width:45%;">
+                    @Html.DisplayNameFor(model => model.DescCodePD)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BegDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EndDate)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CodePD)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DescCodePD)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BegDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndDate)
+                    </td>
+                    <td>
+                        <a data-toggle="tooltip" data-popup="tooltip-custom" data-original-title="Изменить" href="@Url.Action("Edit", new { id = item.Id })"><i class='ft-edit-2'></i></a>
+                        |
+                        <a data-toggle="tooltip" data-popup="tooltip-custom" data-original-title="Посмотреть" href="@Url.Action("Details", new { id = item.Id })"><i class='ft-eye'></i></a>
+                        |
+                        <a data-toggle="tooltip" data-popup="tooltip-custom" data-original-title="Удалить" href="@Url.Action("Delete", new { id = item.Id })"><i class='red ft-trash-2'></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@section scripts{
+    @Html.Partial("../Shared/DTJsForDicts",
+    new Dictionary<string, string>(2) {
+        { "TableClass", "DicTableList" },
+        { "BtnCreateText", "Добавить" }
+    })
+}

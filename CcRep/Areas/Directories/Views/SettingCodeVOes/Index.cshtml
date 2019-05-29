@@ -1,0 +1,174 @@
+﻿@using CcRep.Helpers
+@using CcRep.Helpers.BreadCrumbs
+@model IEnumerable<CcRep.Models.dic.SettingCodeVO>
+
+@{
+    ViewBag.Title = "Коды 405/406";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    Crumbs breadCrumbs = CrumbsProvider.ForDirectories();
+    breadCrumbs.AddRange(new Crumbs {
+        new Crumb {Name = "Коды 405/406" },
+        new Crumb {Name = "Список" }
+    });
+}
+
+@Html.BreadCrumbs(breadCrumbs, (string)ViewBag.Title)
+
+@using (Html.BeginCard("Список доступных сущностей"))
+{
+    <table class="DicTableList table-sm table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.CodeVO)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OperationCode.DescDirect)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Replace405)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CodeVODesc)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Code405Desc)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DirectionPay)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IssuerNerez)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IssuerRez)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PropertyFlg)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Include405)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Include406)
+                </th>
+                <th class="width-5-per"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+                {
+                <tr>
+                    <td class="dt-content-plus">
+                        @Html.DisplayFor(modelItem => item.CodeVO)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OperationCode.DescDirect)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Replace405)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CodeVODesc)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Code405Desc)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DirectionPay)
+                    </td>
+                    <td>
+                        @Html.TrueFalseValue(item.IssuerNerez)
+                    </td>
+                    <td>
+                        @Html.TrueFalseValue(item.IssuerRez)
+
+                    </td>
+                    <td>
+                        @Html.TrueFalseValue(item.PropertyFlg)
+                    </td>
+                    <td>
+                        @Html.TrueFalseValue(item.Include405)
+                    </td>
+                    <td>
+                        @Html.TrueFalseValue(item.Include406)
+                    </td>
+                    <td>
+                        <a data-toggle="tooltip" data-popup="tooltip-custom" data-original-title="Изменить" href="@Url.Action("Edit", new { id = item.Id })"><i class='ft-edit-2'></i></a>
+
+                        <a data-toggle="tooltip" data-popup="tooltip-custom" data-original-title="Посмотреть" href="@Url.Action("Details", new { id = item.Id })"><i class='ft-eye'></i></a>
+
+                        <a data-toggle="tooltip" data-popup="tooltip-custom" data-original-title="Удалить" href="@Url.Action("Delete", new { id = item.Id })"><i class='red ft-trash-2'></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+
+@section scripts{
+
+    <script>
+        $(window).on('load', function () {
+
+            window.defaultDTable = $('.DicTableList').DataTable({
+
+                responsive: true,
+                language: {
+                    url: '/Content/lang/datatables_ru.json'
+                },
+                buttons: [
+                    //{
+                    //    extend: 'colvis',
+                    //    className: 'btn btn-secondary btn-outline-info btn-min-width mr-1 mb-1',
+                    //    columns: ':lt(-1)',
+                    //    text: 'Показать/Скрыть колонки'
+                    //},
+                    {
+                        className: 'btn btn-outline-info btn-min-width mr-1 mb-1',
+                        text: '<i class="la la-plus"></i> '+'Добавить',
+                        action: function (e, dt, button, config) {
+                            window.location = '@Url.Action("Create")'
+                        }
+                    }
+                ],
+                dom: 'Blfrtip',
+                "pageLength": 10,
+                "bLengthChange": false,
+                aoColumnDefs: [
+                    {
+                        bSortable: false,
+                        aTargets: [-1, -2, -3, -4, -5, -6]
+                    },
+                    {
+                        render: function (data, type, full, meta) {
+                            var changedData = "";
+                            var cssClass = "border-warning warning";
+
+                            switch (data) {
+                                case "1":
+                                    changedData = "Входящий";
+                                    cssClass = "border-success success";
+                                    break;
+                                case "2":
+                                    changedData = "Исходящий";
+                                    cssClass = "border-primary primary";
+                                    break;
+                            }
+
+                            return "<div class='badge " + cssClass + " badge-border'>" + changedData + "</div>";
+                        },
+                        targets: 5
+                    },
+                    {
+                        render: RenderGridYesNo,
+                        targets: 6
+                    }
+                
+                ]
+            });
+        });
+    </script>
+}

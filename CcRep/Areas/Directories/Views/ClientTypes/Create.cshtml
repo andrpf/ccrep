@@ -1,0 +1,48 @@
+﻿@using CcRep.Helpers
+@using CcRep.Helpers.BreadCrumbs
+
+@model CcRep.Models.dic.ClientType
+
+@{
+    ViewBag.Title = "Спиок типов клиентов";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    Crumbs crList = Crumbs.getCrumbsNoLinks("Администрирование", "Справочники", "Типы клиентов", "Создать");
+}
+
+@Html.BreadCrumbs(crList, (string)ViewBag.Title)
+
+@using (Html.BeginCard("Форма новой сущности"))
+{
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.NameShort, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.NameShort, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.NameShort, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="submit" class="btn btn-info">
+                        <i class="la la-check"></i>&nbsp; Создать &nbsp;
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+}

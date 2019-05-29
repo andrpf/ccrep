@@ -1,0 +1,125 @@
+﻿@using CcRep.Helpers
+@using CcRep.Helpers.BreadCrumbs
+
+@model CcRep.Models.dic.SettingCodeVO
+
+@{
+    ViewBag.Title = "Удалить код 405/406";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    Crumbs breadCrumbs = CrumbsProvider.ForDirectories();
+    breadCrumbs.AddRange(new Crumbs {
+        new Crumb {Name = "Коды 405/406" },
+        new Crumb {Name = "Удалить" },
+        new Crumb {Name = Model.CodeVO },
+    });
+}
+
+@Html.BreadCrumbs(breadCrumbs, (string)ViewBag.Title)
+
+@using (Html.BeginCard("Подтверждение кода: " + Model.CodeVO))
+{
+    <h3>Вы уверены, что хотите это удалить?</h3>
+    <br />
+    <div>
+        <dl>
+            <dt>
+                @Html.DisplayNameFor(model => model.OperationCode.DescDirect)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.OperationCode.DescDirect)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CodeVO)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CodeVO)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Replace405)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Replace405)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CodeVODesc)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CodeVODesc)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Code405Desc)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Code405Desc)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DirectionPay)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DirectionPay)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.IssuerNerez)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.IssuerNerez)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.IssuerRez)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.IssuerRez)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PropertyFlg)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PropertyFlg)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Include405)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Include405)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Include406)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Include406)
+            </dd>
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <button type="submit" class="btn btn-danger"><i class="la la-remove"></i>&nbsp; Удалить &nbsp;</button>
+                <button href="@Url.Action("Index")" type="button" class="btn btn-secondary"><i class="la la-list"></i>&nbsp; Перейти к списку &nbsp;</button>
+            </div>
+        }
+    </div>
+}

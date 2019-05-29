@@ -1,0 +1,427 @@
+﻿@using CcRep.Helpers
+@using CcRep.Helpers.BreadCrumbs
+@using CcRep.Helpers.Card
+
+@model CcRep.Models.vk.AddInfRep
+
+@{
+    ViewBag.Title = "Операция";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    Crumbs breadCrumbs = new Crumbs {
+        new Crumb {Name = "Отчеты" },
+        new Crumb {Name = Model.HeaderRep.Name },
+        new Crumb {Name = "Операции" },
+        new Crumb {Name = Model.IdOper.ToString() },
+    };
+
+    CardParams cParams = new CardParams { Hide = false };
+}
+
+<div class="modal fade text-left" id="iconModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="myModalLabel2"><i class="la la-road2"></i>Комментарии к операции</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="commentsContainer">
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="content-header row">
+    <div class="content-header-left col-md-6 col-12 mb-1">
+        <h3 class="content-header-title">Карточка операции</h3>
+    </div>
+    <div class="content-header-right text-md-right col-md-6 col-12">
+        <div class="btn-group">
+            <div id="toolbar-opts" class="hidden">
+                <a href="#"><i class="ft-edit-3"></i></a>
+            </div>
+            <button data-toggle="modal" data-target="#iconModal" type="button" class="float-right btn btn-info btn-min-width">
+                <i class="la la-comments"></i> Комментарии
+            </button>
+            <button id="buttonT" type="button" class="float-right btn btn-info btn-min-width">
+                <i class="ft-settings spinner white"></i> Настройки
+            </button>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginCard("Операция, ID " + Model.IdOper, cssClass: "transactionCard", parameteres: cParams))
+{
+    
+
+
+
+
+    <ul class="nav nav-tabs nav-underline nav-justified">
+        <li class="nav-item">
+            <a class="nav-link active" id="activeIcon12-tab1" data-toggle="tab" href="#activeIcon12" aria-controls="activeIcon12" aria-expanded="true">
+                <i class="la la-circle"></i> Операция
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="linkIcon12-tab1" data-toggle="tab" href="#linkIcon12" aria-controls="linkIcon12" aria-expanded="false">
+                <i class="la la-smile-o"></i> Клиенты
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="linkIconOpt11-tab1" data-toggle="tab" href="#linkIconOpt11" aria-controls="linkIconOpt11">
+                <i class="la la-dollar"></i> Ценные бумаги
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" id="linkIconOpt12-tab1" data-toggle="tab" href="#linkIconOpt12" aria-controls="linkIconOpt12">
+                <i class="la la-pencil-square"></i> Примечания
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="linkIconOpt13-tab1" data-toggle="tab" href="#linkIconOpt13" aria-controls="linkIconOpt13">
+                <i class="la la-check-square"></i> Аудит
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="linkIconOpt14-tab1" data-toggle="tab" href="#linkIconOpt14" aria-controls="linkIconOpt14">
+                <i class="la la-list-alt"></i> Форма 406
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="linkIconOpt15-tab1" data-toggle="tab" href="#linkIconOpt15" aria-controls="linkIconOpt15">
+                <i class="la la-folder-o"></i> Подтв. документы
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" id="linkIconOpt16-tab1" data-toggle="tab" href="#linkIconOpt16" aria-controls="linkIconOpt16">
+                <i class="la la-plus-square"></i> Дополн.
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content px-1 pt-1">
+        <div role="tabpanel" class="tab-pane active" id="activeIcon12" aria-labelledby="activeIcon12-tab1" aria-expanded="true">
+
+            <div class="row">
+                <div class="col">
+                    <div class="list-group">
+                        @Html.ListGroupItem(Model => Model.BasicRep.Filial)
+
+                        @Html.ListGroupItem(Model => Model.BasicRep.PostDate)
+
+                        @Html.ListGroupItem(Model => Model.BasicRep.TypeTooling)
+
+                        @Html.ListGroupItem(Model => Model.BasicRep.OperType)
+
+                        @Html.ListGroupItem(Model => Model.BasicRep.DirectionPay)
+
+                        @Html.ListGroupItem(Model => Model.BasicRep.Count)
+
+                        @Html.ListGroupItem(Model => Model.BasicRep.Share)
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="list-group">
+                        @Html.ListGroupItem(Model => Model.BasicRep.Ccy)
+
+                        @Html.ListGroupItem(Model => Model.BasicRep.AmountAll)
+
+                        @Html.ListGroupItem(Model => Model.BasicRep.AmntIncome)
+
+                        @Html.ListGroupItem(Model => Model.BasicRep.RefNum)
+
+                        @Html.ListGroupItem(Model => Model.BasicRep.CodeVO)
+
+                        @Html.ListGroupItem(Model => Model.BasicRep.ValueDate)
+
+                        @Html.ListGroupItem(Model => Model.BasicRep.Swift)
+
+                        @Html.ListGroupItem(Model => Model.BasicRep.SwiftFil)
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="tab-pane" id="linkIcon12" role="tabpanel" aria-labelledby="linkIcon12-tab1" aria-expanded="false">
+            <div class="row">
+                <div class="col">
+                    <div class="list-group">
+                        @Html.ListGroupItem(Model => Model.ClientRep.NameRez)
+
+                        @Html.ListGroupItem(Model => Model.ClientRep.TypeRez)
+
+                        @Html.ListGroupItem(Model => Model.ClientRep.BicPartner)
+
+                        @Html.ListGroupItem(Model => Model.ClientRep.CountryRez)
+
+                        @Html.ListGroupItem(Model => Model.ClientRep.INN)
+
+                        @Html.ListGroupItem(Model => Model.ClientRep.CustNo)
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="list-group">
+                        @Html.ListGroupItem(Model => Model.ClientRep.NameNerez)
+
+                        @Html.ListGroupItem(Model => Model.ClientRep.TypeNerez)
+
+                        @Html.ListGroupItem(Model => Model.ClientRep.CountryNerez)
+
+                        @Html.ListGroupItem(Model => Model.ClientRep.BankName)
+
+                        @Html.ListGroupItem(Model => Model.ClientRep.CountryBank)
+
+                        @Html.ListGroupItem(Model => Model.ClientRep.PartnerName)
+
+                        @Html.ListGroupItem(Model => Model.ClientRep.CountryPartner)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane" id="linkIconOpt11" role="tabpanel" aria-labelledby="linkIconOpt11-tab1" aria-expanded="false">
+            <div class="row">
+                <div class="col">
+                    <div class="list-group">
+                        @Html.ListGroupItem(Model => Model.IssuerRep.IssuerName)
+
+                        @Html.ListGroupItem(Model => Model.IssuerRep.SecurityCode)
+
+                        @Html.ListGroupItem(Model => Model.IssuerRep.RegNumIssuer)
+
+                        @Html.ListGroupItem(Model => Model.IssuerRep.DateRegIssuer)
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="list-group">
+                        @Html.ListGroupItem(Model => Model.IssuerRep.RepayDate)
+
+                        @Html.ListGroupItem(Model => Model.IssuerRep.CcyIssuer)
+
+                        @Html.ListGroupItem(Model => Model.IssuerRep.IssuerCode)
+
+                        @Html.ListGroupItem(Model => Model.IssuerRep.IssuerReestr)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane" id="linkIconOpt12" role="tabpanel" aria-labelledby="linkIconOpt11-tab1" aria-expanded="false">
+            <div class="row">
+                <div class="col">
+                    <div class="list-group">
+                        @Html.ListGroupItem(Model => Model.NoticeRep.Notice)
+
+                        @Html.ListGroupItem(Model => Model.NoticeRep.NoticeIssuer)
+
+                        @Html.ListGroupItem(Model => Model.NoticeRep.NoticeExchange)
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="list-group">
+                        @Html.ListGroupItem(Model => Model.NoticeRep.NoticeInst)
+
+                        @Html.ListGroupItem(Model => Model.NoticeRep.NoticeProperty)
+
+                        @Html.ListGroupItem(Model => Model.NoticeRep.NoticeBank)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="linkIconOpt13" role="tabpanel" aria-labelledby="linkIconOpt13-tab1" aria-expanded="false">
+            <div class="row">
+                <div class="col">
+                    <div class="list-group">
+                        @Html.ListGroupItem(Model => Model.AddRep.CcdUser)
+
+                        @Html.ListGroupItem(Model => Model.AddRep.Narrative)
+
+                        @Html.ListGroupItem(Model => Model.AddRep.CityCode)
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="list-group">
+                        @Html.ListGroupItem(Model => Model.AddRep.NoticeReport)
+
+                        @Html.ListGroupItem(Model => Model.AddRep.DepAcc)
+
+                        @Html.ListGroupItem(Model => Model.AddRep.ContractNum)
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="list-group">
+                        @Html.ListGroupItem(Model => Model.AddRep.Source405)
+
+                        @Html.ListGroupItem(Model => Model.AddRep.ModifyDate)
+
+                        @Html.ListGroupItem(Model => Model.AddRep.ModifyUser)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane" id="linkIconOpt14" role="tabpanel" aria-labelledby="linkIconOpt14-tab1" aria-expanded="false">
+            <div class="row">
+                <div class="col">
+                    <div class="list-group">
+                        @Html.ListGroupItem(Model => Model.Rep406.OperKind)
+
+                        @Html.ListGroupItem(Model => Model.Rep406.Notice40)
+
+                        @Html.ListGroupItem(Model => Model.Rep406.AmountTo)
+
+                        @Html.ListGroupItem(Model => Model.Rep406.AmountFrom)
+
+                        @Html.ListGroupItem(Model => Model.Rep406.BicBank)
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="list-group">
+                        @Html.ListGroupItem(Model => Model.Rep406.CountryBank406)
+
+                        @Html.ListGroupItem(Model => Model.Rep406.AddCode10)
+
+                        @Html.ListGroupItem(Model => Model.Rep406.KindRez)
+
+                        @Html.ListGroupItem(Model => Model.Rep406.InnNerez)
+
+                        @Html.ListGroupItem(Model => Model.Rep406.KindNerez)
+
+
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="list-group">
+                        @Html.ListGroupItem(Model => Model.Rep406.KindContract)
+
+                        @Html.ListGroupItem(Model => Model.Rep406.TypeContract)
+
+                        @Html.ListGroupItem(Model => Model.Rep406.Notice15)
+
+                        @Html.ListGroupItem(Model => Model.Rep406.Notice16)
+
+                        @Html.ListGroupItem(Model => Model.Rep406.NoticeOther)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane" id="linkIconOpt15" role="tabpanel" aria-labelledby="linkIconOpt15-tab1" aria-expanded="false">
+            <div class="row">
+                <div class="col">
+                    <div class="list-group">
+                        @Html.ListGroupItem(Model => Model.SupdocRep.CodeSupdoc)
+
+                        @Html.ListGroupItem(Model => Model.SupdocRep.SupdocName)
+
+                        @Html.ListGroupItem(Model => Model.SupdocRep.Prinvest)
+
+                        @Html.ListGroupItem(Model => Model.SupdocRep.EntryDate)
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="list-group">
+                        @Html.ListGroupItem(Model => Model.SupdocRep.SupdocType)
+
+                        @Html.ListGroupItem(Model => Model.SupdocRep.RegNumBranch)
+
+                        @Html.ListGroupItem(Model => Model.SupdocRep.ClientName)
+
+                        @Html.ListGroupItem(Model => Model.SupdocRep.SourceSupdoc)
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="list-group">
+                        @Html.ListGroupItem(Model => Model.SupdocRep.PassportNum)
+
+                        @Html.ListGroupItem(Model => Model.SupdocRep.DocDate)
+
+                        @Html.ListGroupItem(Model => Model.SupdocRep.UpdateSdDate)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane" id="linkIconOpt16" role="tabpanel" aria-labelledby="linkIconOpt16-tab1" aria-expanded="false">
+            <div class="row">
+                <div class="col">
+                    <div class="list-group">
+                        @Html.ListGroupItem(Model => Model.Form)
+
+                        @Html.ListGroupItem(Model => Model.Section)
+
+                        @Html.ListGroupItem(Model => Model.Status)
+
+                        @Html.ListGroupItem(Model => Model.Author)
+
+                        @Html.ListGroupItem(Model => Model.DateCreate)
+
+                        @Html.ListGroupItem(Model => Model.Source)
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="list-group">
+                        @Html.ListGroupItem(Model => Model.IdSource)
+
+                        @Html.ListGroupItem(Model => Model.DateLock)
+
+                        @Html.ListGroupItem(Model => Model.UserLock)
+
+                        @Html.ListGroupItem(Model => Model.DateRemove)
+
+                        @Html.ListGroupItem(Model => Model.NumJD)
+
+                        @Html.ListGroupItem(Model => Model.NumDVK)
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="list-group">
+                        @Html.ListGroupItem(Model => Model.DateRequest)
+
+                        @Html.ListGroupItem(Model => Model.DateGetDoc)
+
+                        @Html.ListGroupItem(Model => Model.SupdocFl)
+
+                        @Html.ListGroupItem(Model => Model.CNum)
+
+                        @Html.ListGroupItem(Model => Model.CBAccount)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts{
+    <script>
+        $('#buttonT').toolbar({
+            content: '#toolbar-opts',
+            event: "click",
+            position: 'bottom',
+            animation: 'flip',
+            style: 'primary'
+        });
+
+        var commentsWidget = new CommentsWidget(
+            ".commentsContainer",
+            "@Url.Action("GetComments", "api/Transactions", new { Area = "Reports", Id = Model.IdOper })",
+            "@Url.Action("AddComment", "api/Transactions", new { Area = "Reports" })",
+            "@Model.IdOper"
+        );
+
+        commentsWidget.init();
+    </script>
+}

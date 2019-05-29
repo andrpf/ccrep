@@ -1,0 +1,6 @@
+STATUS;NAME_STATUS;SUPDOC_FL
+NEW;Не обработано;
+INCLUDE;Включено в отчет;
+EXCLUDE;Исключено из отчета;
+NOINFORM;Нет информации/документов;
+REQADD;Требует дополнительного анализа;Y

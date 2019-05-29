@@ -1,0 +1,127 @@
+﻿@using CcRep.Helpers
+@using CcRep.Helpers.BreadCrumbs
+@model CcRep.Models.dic.SettingCodeVO
+
+@{
+    ViewBag.Title = "Информация о коде (405/406)";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    Crumbs breadCrumbs = CrumbsProvider.ForDirectories();
+    breadCrumbs.AddRange(new Crumbs {
+        new Crumb {Name = "Коды 405/406"},
+        new Crumb {Name = "Информация о записи"},
+        new Crumb {Name = Model.CodeVO },
+    });
+
+    var truFalseNullList = new List<SelectListItem> {
+        new SelectListItem{ Text="-",Value=""},
+        new SelectListItem{ Text="Да",Value = "true" },
+        new SelectListItem{ Text="Нет",Value = "false" },
+    };
+}
+
+@Html.BreadCrumbs(breadCrumbs, (string)ViewBag.Title)
+
+@using (Html.BeginCard("Информация о коде: " + Model.CodeVO))
+{
+    <div>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.OperationCode.DescDirect)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.OperationCode.DescDirect)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CodeVO)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CodeVO)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Replace405)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Replace405)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CodeVODesc)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CodeVODesc)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Code405Desc)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Code405Desc)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DirectionPay)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DirectionPay)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.IssuerNerez)
+            </dt>
+
+            <dd>
+                @Html.TrueFalseValue(Model.IssuerNerez, "-")
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.IssuerRez)
+            </dt>
+
+            <dd>
+                @Html.TrueFalseValue(Model.IssuerRez, "-")
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PropertyFlg)
+            </dt>
+
+            <dd>
+                @Html.TrueFalseValue(Model.PropertyFlg, "-")
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Include405)
+            </dt>
+
+            <dd>
+                @Html.TrueFalseValue(Model.Include405, "-")
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Include406)
+            </dt>
+
+            <dd>
+                @Html.TrueFalseValue(Model.Include406, "-")
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        <div class="form-group">
+            <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                <button href="@Url.Action("Edit", new { id = Model.Id })" type="button" class="btn btn-cyan">Изменить</button>
+                <button href="@Url.Action("Index")" type="button" class="btn btn-info">Перейти к списку</button>
+            </div>
+        </div>
+    </p>
+}

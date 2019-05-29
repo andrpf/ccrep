@@ -1,0 +1,106 @@
+﻿@using CcRep.Helpers
+@using CcRep.Helpers.BreadCrumbs
+
+@model CcRep.Areas.System.ViewModels.AddUser
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string flashMessage = TempData["Flash"] as string;
+    Crumbs breadCrumbs = new Crumbs {
+        new Crumb {Name = "Администрирование" },
+        new Crumb {Name = "Пользователи и роли" },
+        new Crumb {Name = "Добавить пользователя из AD" }
+    };
+}
+
+@Html.BreadCrumbs(breadCrumbs, "Добавить пользователя из ActiveDirectory")
+
+@using (Html.BeginCard("Форма новой сущности", cssClass: "border-left-info"))
+{
+    using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "addUser" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Locked, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Locked, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Locked, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="submit" id="blockSend" class="btn btn-info">
+                        <i class="la la-check"></i>&nbsp; Создать &nbsp;
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="col-md-offset-2 col-md-10">
+        @Html.ActionLink("Перейти к списку", "Index")
+    </div>
+    <div class="modal fade text-left" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div style="z-index:15555555" class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="myModalLabel2"><i class="la la-road2"></i> Информация</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        @flashMessage
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts{
+    <script>
+        $('#addUser').on("submit", function () {
+            if ($(this).valid()) {
+                $.blockUI({
+                    message: '<div class="ft-refresh-cw icon-spin font-medium-2"></div>',
+                    overlayCSS: {
+                        backgroundColor: '#FFF',
+                        cursor: 'wait',
+                    },
+                    css: {
+                        border: 0,
+                        padding: 0,
+                        backgroundColor: 'none'
+                    }
+                });
+            }
+
+        });
+
+        @if (flashMessage != null)
+{
+            <text>
+        setTimeout(function () {
+            $('#messageModal').modal();
+        }, 1000);
+    </text>
+    }
+    </script>
+}

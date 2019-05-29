@@ -1,0 +1,69 @@
+﻿@using CcRep.Helpers
+@using CcRep.Helpers.BreadCrumbs
+
+@model CcRep.Models.dic.CodeTooling
+
+@{
+    ViewBag.Title = "Удалить код инструмента";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    Crumbs breadCrumbs = CrumbsProvider.ForDirectories();
+    breadCrumbs.AddRange(new Crumbs {
+        new Crumb {Name = "Коды инструментов" },
+        new Crumb {Name = "Удалить запись" },
+        new Crumb {Name = Model.TypeTooling }
+    });
+}
+
+@Html.BreadCrumbs(breadCrumbs, "Удаление кода инструмента")
+
+@using (Html.BeginCard("Подтвердите удаление записи: " + Model.TypeTooling))
+{
+    <h3>Вы уверены, что хотите это удалить?</h3>
+    <br />
+    <div>
+        <dl>
+            <dt>
+                @Html.DisplayNameFor(model => model.TypeTooling)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TypeTooling)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DescTooling)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DescTooling)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.BegDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.BegDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.EndDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EndDate)
+            </dd>
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <button type="submit" class="btn btn-danger"><i class="la la-remove"></i>&nbsp; Удалить &nbsp;</button>
+                <button href="@Url.Action("Index")" type="button" class="btn btn-secondary"><i class="la la-list"></i>&nbsp; Перейти к списку &nbsp;</button>
+            </div>
+        }
+    </div>
+}

@@ -1,0 +1,49 @@
+﻿@model Dictionary<string, string>
+<script>
+    $.fn.dataTable.ext.type.detect.unshift(
+        function (d) {
+            if (d.indexOf('class="check-box"') != -1) {
+                return 'check-box-grade';
+            }
+            return null
+        }
+    );
+    $.fn.dataTable.ext.type.order['check-box-grade-pre'] = function (d) {
+
+        if (d.indexOf('checked="checked"') != -1) {
+            return 2;
+        } else {
+            return 1;
+        }
+        return 0;
+    };
+        $(window).on('load', function () {
+
+            window.defaultDTable =  $('.@Model["TableClass"]').DataTable({
+                language: {
+                    url: '/Content/lang/datatables_ru.json'
+                },
+
+                buttons: [
+                    {
+                        className: 'btn btn-outline-info btn-min-width mr-1 mb-1',
+                        text: '<i class="la la-plus"></i> '+'@Model["BtnCreateText"]',
+                        action: function (e, dt, button, config) {
+                            window.location = '@Url.Action("Create")'
+                        }
+                    }
+                ],
+
+                dom: 'Blfrtip',
+                "pageLength": 10,
+                "bLengthChange": false,
+                aoColumnDefs: [
+                    {
+                        bSortable: false,
+                        aTargets: [-1]
+                    },
+                    //{ "visible": false, "targets": -2 }
+                ]
+            });
+        });
+</script>

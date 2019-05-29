@@ -1,0 +1,47 @@
+﻿@using CcRep.Helpers
+@using CcRep.Helpers.BreadCrumbs
+@model CcRep.Models.dic.ClientType
+
+@{
+    ViewBag.Title = "Информация о типе клиента";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    Crumbs breadCrumbs = CrumbsProvider.ForDirectories();
+    breadCrumbs.AddRange(new Crumbs {
+        new Crumb {Name = "Типы клиентов" },
+        new Crumb {Name = "Информация о записи" },
+        new Crumb {Name = Model.NameShort },
+    });
+}
+
+@Html.BreadCrumbs(breadCrumbs, (string)ViewBag.Title)
+
+@using (Html.BeginCard("Информация о типе клиента: " + Model.NameShort))
+{
+    <div>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.NameShort)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.NameShort)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+
+        </dl>
+    </div>
+    <div class="form-group">
+        <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+            <button href="@Url.Action("Edit", new { id = Model.Id })" type="button" class="btn btn-cyan">Изменить</button>
+            <button href="@Url.Action("Index")" type="button" class="btn btn-info">Перейти к списку</button>
+        </div>
+    </div>
+}

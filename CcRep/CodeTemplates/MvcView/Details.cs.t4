@@ -1,0 +1,124 @@
+﻿<#@ template language="C#" HostSpecific="True" #>
+<#@ output extension=".cshtml" #>
+<#@ include file="Imports.include.t4" #>
+@using CcRep.Helpers
+@using CcRep.Helpers.BreadCrumbs
+
+@model <#= ViewDataTypeName #>
+
+@{
+	Crumbs breadCrumbs = new Crumbs {
+		new Crumb {Name = "Index" }
+	};
+}
+<#
+// The following chained if-statement outputs the file header code and markup for a partial view, a view using a layout page, or a regular view.
+if(IsPartialView) {
+#>
+
+<#
+} else if(IsLayoutPageSelected) {
+#>
+
+@{
+	ViewBag.Title = "<#= ViewName#>";
+<#
+if (!String.IsNullOrEmpty(LayoutPageFile)) {
+#>
+	Layout = "<#= LayoutPageFile#>";
+<#
+}
+#>
+}
+
+<#
+} else {
+#>
+
+@{
+	Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<title><#= ViewName #></title>
+</head>
+<body>
+<#
+	PushIndent("    ");
+}
+#>
+@Html.BreadCrumbs(breadCrumbs, "<#= ViewName#>")
+
+@using (Html.BeginCard("<#= ViewDataTypeShortName #>"))
+{
+<div>
+
+	<dl class="dl-horizontal">
+<#
+foreach (PropertyMetadata property in ModelMetadata.Properties) {
+	if (property.Scaffold && !property.IsPrimaryKey && !property.IsForeignKey) {
+#>
+<#
+		// We do not want to show any association properties for which there is
+		// no associated foreign key.
+		if (property.IsAssociation && GetRelatedModelMetadata(property) == null) {
+			continue;
+		}
+#>
+		<dt>
+			@Html.DisplayNameFor(model => model.<#= GetValueExpression(property) #>)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.<#= GetValueExpression(property) #>)
+		</dd>
+
+<#
+	}
+}
+#>
+	</dl>
+</div>
+<p>
+<#
+string pkName = GetPrimaryKeyName();
+if (pkName != null) {
+#>
+
+<div class="form-group">
+	<div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+		<button href="@Url.Action("Edit", new { id = Model.<#= pkName #> })" type="button" class="btn btn-cyan">Изменить</button>
+		<button href="@Url.Action("Index")" type="button" class="btn btn-info">Перейти к списку</button>
+	</div>
+</div>
+<#
+} else {
+#>
+<div class="form-group">
+	<div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+		<button href="@Url.Action("Edit", new { /* id = Model.PrimaryKey */ })" type="button" class="btn btn-cyan">Изменить</button>
+		<button href="@Url.Action("Index")" type="button" class="btn btn-info">Перейти к списку</button>
+	</div>
+</div>
+<#
+}
+#>
+</p>
+}
+<#
+// The following code closes the tag used in the case of a view using a layout page and the body and html tags in the case of a regular view page
+#>
+<#
+if(!IsPartialView && !IsLayoutPageSelected) {
+	ClearIndent();
+#>
+</body>
+</html>
+<#
+}
+#>
+<#@ include file="ModelMetadataFunctions.cs.include.t4" #>

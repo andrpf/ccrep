@@ -1,0 +1,9 @@
+diff a/CcRep/CcRep.csproj b/CcRep/CcRep.csproj	(rejected hunks)
+@@ -5,6 +5,7 @@
+   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+   <PropertyGroup>
+     <SSDTUnitTestPath Condition="'$(SSDTUnitTestPath)' == ''">$(VsInstallRoot)\Common7\IDE\Extensions\Microsoft\SQLDB</SSDTUnitTestPath>
++    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+   </PropertyGroup>
+   <PropertyGroup>
+     <SSDTPath Condition="'$(SSDTPath)' == ''">$(VsInstallRoot)\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\130</SSDTPath>

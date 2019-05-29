@@ -1,0 +1,69 @@
+﻿@using CcRep.Helpers
+@using CcRep.Helpers.BreadCrumbs
+@model CcRep.Models.dic.PDType
+
+@{
+    ViewBag.Title = "Удалить вид подтверждающего документа";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    Crumbs breadCrumbs = CrumbsProvider.ForDirectories();
+    breadCrumbs.AddRange(new Crumbs {
+        new Crumb {Name = "Виды подтверждающих документов" },
+        new Crumb {Name = "Удалить" },
+        new Crumb {Name = Model.CodePD },
+    });
+}
+
+@Html.BreadCrumbs(breadCrumbs, (string)ViewBag.Title)
+
+@using (Html.BeginCard("Подтверждение удалиния типа ПД: " + Model.CodePD))
+{
+    <h3>Вы уверены, что хотите это удалить?</h3>
+    <br />
+    <div>
+        <dl>
+            <dt>
+                @Html.DisplayNameFor(model => model.CodePD)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CodePD)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DescCodePD)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DescCodePD)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.BegDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.BegDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.EndDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EndDate)
+            </dd>
+
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <button type="submit" class="btn btn-danger"><i class="la la-remove"></i>&nbsp; Удалить &nbsp;</button>
+                <button href="@Url.Action("Index")" type="button" class="btn btn-secondary"><i class="la la-list"></i>&nbsp; Перейти к списку &nbsp;</button>
+            </div>
+        }
+    </div>
+}

@@ -1,0 +1,114 @@
+﻿@using CcRep.Helpers
+@using CcRep.Helpers.BreadCrumbs
+
+@model CcRep.Models.vk.HeaderRep
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    Crumbs breadCrumbs = new Crumbs {
+        new Crumb {Name = "Index" }
+    };
+}
+
+@Html.BreadCrumbs(breadCrumbs, "Delete")
+
+@using (Html.BeginCard("HeaderRep"))
+{
+    <h3>Вы уверены, что хотите это удалить?</h3>
+    <br/>
+    <div>
+        <dl>
+            <dt>
+                @Html.DisplayNameFor(model => model.UserArch.UserName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.UserArch.UserName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.UserCreated.UserName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.UserCreated.UserName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.UserLastEdited.UserName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.UserLastEdited.UserName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.BeginDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.BeginDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.EndDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EndDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CreateDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CreateDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Status)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Status)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ArchiveDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ArchiveDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Comment)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Comment)
+            </dd>
+
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <button type="submit" class="btn btn-danger"><i class="la la-remove"></i>&nbsp; Удалить &nbsp;</button>
+                <button href="@Url.Action("Index")" type="button" class="btn btn-secondary"><i class="la la-list"></i>&nbsp; Перейти к списку &nbsp;</button>
+            </div> }
+    </div>
+}

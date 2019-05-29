@@ -1,0 +1,43 @@
+﻿@using CcRep.Models._mail;
+<!DOCTYPE html>
+<html class="loaded" lang="ru" data-textdirection="ltr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - CC Rep</title>
+
+    <link href="~/wwwroot/css/vendor/vendor-head.min.css" rel="stylesheet"/>
+    <link href="~/wwwroot/css/app/app.min.css" rel="stylesheet" />
+    @RenderSection("css", required: false)
+    <script src="~/wwwroot/js/vendor/head.min.js"></script>
+</head>
+<body class="vertical-layout vertical-menu 2-columns   menu-expanded fixed-navbar" data-open="click" data-menu="vertical-menu" data-col="2-columns">
+    @Html.Partial("_TopMenu", new ContactUs())
+    @Html.Partial("_SideMenu")
+
+    <div class="app-content content">
+        <div style="display: none;" class="content-wrapper fadeInOnLoad">
+            <div class="content-header row"></div>
+            <div class="content-body">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer fixed-bottom footer-light navbar-border">
+        <p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2">
+            <span class="float-md-left d-block d-md-inline-block">
+                Copyright &copy; @DateTime.Now.Year
+                <a class="text-bold-900 info" href="http://rad-apps.intranet/" target="_blank">
+                    RAD .NET Unicredit Bank Team
+                </a>
+                , All rights reserved.
+            </span>
+            <span class="float-md-right d-block d-md-inline-blockd-none d-lg-block">Сделано с <i class="ft-heart pink"></i></span>
+        </p>
+    </footer>
+    <script src="~/wwwroot/js/vendor/vendor.min.js"></script>
+    <script src="~/wwwroot/js/app/app.min.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

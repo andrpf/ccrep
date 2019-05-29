@@ -1,0 +1,242 @@
+﻿@model CcRep.Areas.Reports.Models.TranIndexViewModel
+
+<table id="dicTableTran" class="nowrap DicTableList table" width:100%;">
+    <thead style="width:100%;">
+        <tr>
+            <th class="no-hide">
+                @Html.DisplayNameFor(model => model.DummyAddInfRep.Form)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyAddInfRep.Section)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyAddInfRep.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyAddInfRep.SupdocFl)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.DummyBasicRep.Filial)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyBasicRep.PostDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyBasicRep.TypeTooling)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.DummyBasicRep.OperType)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.DummyBasicRep.DirectionPay)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyBasicRep.Count)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.DummyBasicRep.Share)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyBasicRep.Ccy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyBasicRep.AmountAll)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyBasicRep.AmntIncome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyBasicRep.RefNum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyBasicRep.CodeVO)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyBasicRep.ValueDate)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.DummyBasicRep.Swift)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyBasicRep.SwiftFil)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.DummyClientRep.NameRez)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyClientRep.TypeRez)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyClientRep.BicPartner)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyClientRep.CountryRez)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyClientRep.INN)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyClientRep.NameNerez)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyClientRep.TypeNerez)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyClientRep.CountryNerez)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyClientRep.BankName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyClientRep.CountryBank)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyClientRep.PartnerName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyClientRep.CountryPartner)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.DummyClientRep.CustNo)
+            </th>
+
+
+            <th>
+                @Html.DisplayNameFor(model => model.DummyIssuerRep.IssuerName)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.DummyIssuerRep.SecurityCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyIssuerRep.RegNumIssuer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyIssuerRep.DateRegIssuer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyIssuerRep.RepayDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyIssuerRep.CcyIssuer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyIssuerRep.IssuerCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyIssuerRep.IssuerReestr)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.DummyRep406.OperKind)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyRep406.Notice40)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyRep406.AmountTo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyRep406.AmountFrom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyRep406.BicBank)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyRep406.CountryBank406)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyRep406.AddCode10)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyRep406.KindRez)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyRep406.KindNerez)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyRep406.KindContract)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyRep406.TypeContract)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyRep406.Notice15)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyRep406.Notice16)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyRep406.NoticeOther)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.DummySupdoc.CodeSupdoc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummySupdoc.SupdocName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummySupdoc.Prinvest)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummySupdoc.EntryDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummySupdoc.SupdocType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummySupdoc.RegNumBranch)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummySupdoc.ClientName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummySupdoc.SourceSupdoc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummySupdoc.PassportNum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummySupdoc.DocDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummySupdoc.UpdateSdDate)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.DummyAddInfRep.DateLock)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyAddInfRep.DateRemove)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyAddInfRep.NumJD)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyAddInfRep.NumDVK)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyAddInfRep.DateRequest)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyAddInfRep.DateGetDoc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyAddInfRep.CNum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DummyAddInfRep.CBAccount)
+            </th>
+
+            <th class="no-hide no-sort"></th>
+        </tr>
+    </thead>
+</table>

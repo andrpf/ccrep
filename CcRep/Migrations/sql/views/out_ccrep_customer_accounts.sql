@@ -1,0 +1,15 @@
+﻿CREATE VIEW out.OUT_CCREP_CUSTOMER_ACCOUNTS (ID_KEY, ACC_CODE, CLIENT, RESIDENT_FLG, CONTROL_FLG) 
+AS
+SELECT ar.ID_KEY, ar.ACC2, 
+STUFF(CAST((SELECT [text()] = ' '+ cl.NameShort FROM DIC_ACCT_REPORT_TO_CLIENT_TYPE ar_ct 
+join DIC_CLIENT_TYPES cl on ar_ct.CLIENT_TYPE_ID = cl.Id 
+WHERE ar_ct.ACCT_REPORT_ID=ar.ID_KEY FOR XML PATH(''), TYPE) AS VARCHAR(100)), 1, 1, '') CLIENT, 
+RESIDENT_FLG = 
+case 
+when ar.RESIDENT = 'true' then 'Y' else 'N'
+end,
+CONTROL_FLG = 
+case 
+when ar.CNTR_PARTNER = 'true' then 'Y' else 'N'
+end
+FROM DIC_ACCT_REPORT ar

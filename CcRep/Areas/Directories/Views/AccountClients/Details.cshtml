@@ -1,0 +1,76 @@
+﻿@using CcRep.Helpers
+@using CcRep.Helpers.BreadCrumbs
+
+@model CcRep.Models.dic.AccountClient
+
+@{
+    ViewBag.Title = "Информация о счете клиента";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    Crumbs breadCrumbs = CrumbsProvider.ForDirectories();
+    breadCrumbs.AddRange(new Crumbs {
+        new Crumb {Name = "Счета клиентов" },
+        new Crumb {Name = "Информация о записи" },
+        new Crumb {Name = Model.CNum },
+    });
+}
+
+@Html.BreadCrumbs(breadCrumbs, (string)ViewBag.Title)
+
+@using (Html.BeginCard("Информация о счете клиента: " + Model.CNum))
+{
+    <div>
+
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.CNum)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CNum)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CBAccount)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CBAccount)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.BegDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.BegDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.EndDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EndDate)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+
+        <div class="form-group">
+            <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                <button href="@Url.Action("Edit", new { id = Model.Id })" type="button" class="btn btn-cyan">Изменить</button>
+                <button href="@Url.Action("Index")" type="button" class="btn btn-info">Перейти к списку</button>
+            </div>
+        </div>
+    </p>
+}

@@ -1,0 +1,69 @@
+﻿@using CcRep.Helpers
+@using CcRep.Helpers.BreadCrumbs
+
+@model IEnumerable<CcRep.Models.dic.ClientType>
+
+@{
+    ViewBag.Title = "Спиок типов клиентов";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    Crumbs test = new Crumbs {
+        new Crumb {Name = "Администрирование" },
+        new Crumb{Name = "Справочники" },
+        new Crumb{Name = "Список типов клиентов"}
+    };
+}
+
+@Html.BreadCrumbs(test, "Список типов клиентов")
+
+<div class="row">
+    <div class="col-12">
+        @using (Html.BeginCard("Типы клиентов"))
+        {
+            <table class="table clTypesTb">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.NameShort)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Description)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NameShort)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                                <a data-toggle="tooltip" data-popup="tooltip-custom" data-original-title="Изменить" href="@Url.Action("Edit", new { id = item.Id })"><i class='ft-edit-2'></i></a>
+                                |
+                                <a data-toggle="tooltip" data-popup="tooltip-custom" data-original-title="Посмотреть" href="@Url.Action("Details", new { id = item.Id })"><i class='ft-eye'></i></a>
+                                |
+                                <a data-toggle="tooltip" data-popup="tooltip-custom" data-original-title="Удалить" href="@Url.Action("Delete", new { id = item.Id })"><i class='red ft-trash-2'></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>
+
+@section scripts{
+
+    @Html.Partial("../Shared/DTJsForDicts",
+    new Dictionary<string, string>(2) {
+        { "TableClass", "clTypesTb" },
+        { "BtnCreateText", "Создать новый тип" }
+    })
+}

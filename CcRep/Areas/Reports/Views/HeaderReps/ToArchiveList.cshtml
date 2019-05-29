@@ -1,0 +1,201 @@
+﻿@using CcRep.Helpers
+@using CcRep.Helpers.BreadCrumbs
+
+@model IEnumerable<CcRep.Models.vk.HeaderRep>
+
+@{
+    Crumbs breadCrumbs = new Crumbs {
+        new Crumb {Name = "Архивация отчетов" },
+        new Crumb {Name = "Список" }
+    };
+
+    ViewBag.Title = "Отправка отчетов в архив";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.BreadCrumbs(breadCrumbs, (string)ViewBag.Title)
+
+@using (Html.BeginCard("Список активных отчетов"))
+{
+    <table class=" DicTableList table">
+        <thead>
+            <tr class="border-danger">
+                <th></th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.BeginDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EndDate)
+                </th>
+                <th>
+                    Создал
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreateDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th>
+                    Заархивировал
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.ArchiveDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Comment)
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <button data-toggle="modal" data-target="#iconModal"
+                                data-original-title="Добавить в архив"
+                                data-href="@Url.Action("ToArchive", new { id = item.Id })"
+                                data-reportName="@item.Name"
+                                data-creator="@(item.UserCreated != null ? item.UserCreated.FullName : "")"
+                                type="button"
+                                class="btn btn-sm btn-icon btn-outline-danger mr-1">
+                            <i class="la la-archive"></i>
+                        </button>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BeginDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserCreated.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreateDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserArch.UserName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ArchiveDate)
+                    </td>
+                    <td>
+                        KD
+                        @Html.DisplayFor(modelItem => item.Comment)
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="modal fade text-left" id="iconModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="myModalLabel2"><i class="la la-road2"></i> Подтвердите архивацию</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h5><i class="la la-arrow-right"></i> Отчет</h5>
+                    <p><strong>Период:</strong></p>
+                    <p class="modal-rep-name">
+
+                    </p>
+                    <p><strong>Создатель:</strong></p>
+                    <p class="modal-rep-creator">
+                    </p>
+                    <hr>
+                    <h5><i class="la la-lightbulb-o"></i> Информация</h5>
+                    <p>
+                        Данный отчет(со всеми операциями) будет отправлен в архив.
+                    </p>
+                    <div class="alert alert-red" role="alert">
+                        <span class="text-bold-600">Внимание!</span>
+                        Данное действие нельзя отменить
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Отмена</button>
+                        <button type="submit" class="toLink btn btn-outline-red">Отправить в архив</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+@section scripts{
+    <script>
+        $.fn.dataTable.ext.type.detect.unshift(
+            function (d) {
+                if (d.indexOf('class="check-box"') != -1) {
+                    return 'check-box-grade';
+                }
+                return null
+            }
+        );
+        $.fn.dataTable.ext.type.order['check-box-grade-pre'] = function (d) {
+
+            if (d.indexOf('checked="checked"') != -1) {
+                return 2;
+            } else {
+                return 1;
+            }
+            return 0;
+        };
+        $(window).on('load', function () {
+
+            window.defaultDTable = $('.DicTableList').DataTable({
+                language: {
+                    url: '/Content/lang/datatables_ru.json'
+                },
+                bFilter: false,
+                buttons: [],
+                paging: false,
+                info: false,
+                ordering: false,
+                dom: 'Blfrtip',
+                bLengthChange: false,
+                aoColumnDefs: [
+                    {
+                        bSortable: false,
+                        aTargets: [-1]
+                    }
+                ]
+            });
+
+            $('#iconModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget) // Button that triggered the modal
+                var creator = button.data('creator');
+                var reportName = button.data('reportname');
+                var href = button.data('href');
+                var modal = $(this)
+
+                modal.find('form').attr('action', href);
+                modal.find('.modal-rep-name').text(reportName);
+                modal.find('.modal-rep-creator').text(creator);
+            })
+        });
+    </script>
+}

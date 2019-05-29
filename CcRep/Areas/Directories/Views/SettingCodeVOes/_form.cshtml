@@ -1,0 +1,161 @@
+﻿@model CcRep.Models.dic.SettingCodeVO
+@{
+    var truFalseNullList = new List<SelectListItem>
+             {
+             new SelectListItem{ Text="-",Value=""},
+             new SelectListItem{ Text="Да",Value = "true" },
+             new SelectListItem{ Text="Нет",Value = "false" },
+            };
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @if ((bool)ViewBag.isEdit)
+        {
+            @Html.HiddenFor(model => model.Id)
+        }
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CodeVO, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.CodeVO, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CodeVO, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CodeVODesc, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.CodeVODesc, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CodeVODesc, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Replace405, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Replace405, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Replace405, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Code405Desc, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Code405Desc, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Code405Desc, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.OperationCodeRef, htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownList("OperationCodeRef", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.OperationCodeRef, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SectionRef, htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownList("SectionRef", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.SectionRef, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DirectionPay, htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownListFor(model => model.DirectionPay, new List<SelectListItem> {
+                        new SelectListItem{ Text="-",Value = ""},
+                        new SelectListItem{ Text="Входящий",Value = "1"},
+                        new SelectListItem{ Text="Исходящий",Value = "2" },
+                    }, new { @class = "form-control" })
+
+                    @Html.ValidationMessageFor(model => model.DirectionPay, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="control-label">Код для 405</label>
+                    @Html.ListBox("selectedCode405", ViewBag.CtList as MultiSelectList, new { @class = "select2", style = "width:100%;" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IssuerNerez, htmlAttributes: new { @class = "control-label" })
+                    <div class="checkbox">
+                        @Html.DropDownListFor(model => model.IssuerNerez, truFalseNullList, new { @class = "select2" })
+                        @Html.ValidationMessageFor(model => model.IssuerNerez, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IssuerRez, htmlAttributes: new { @class = "control-label" })
+                    <div class="checkbox">
+                        @Html.DropDownListFor(model => model.IssuerRez, truFalseNullList, new { @class = "select2" })
+                        @Html.ValidationMessageFor(model => model.IssuerRez, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PropertyFlg, htmlAttributes: new { @class = "control-label" })
+                    <div class="checkbox">
+                        @Html.DropDownListFor(model => model.PropertyFlg, truFalseNullList, new { @class = "select2" })
+                        @Html.ValidationMessageFor(model => model.PropertyFlg, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Include405, htmlAttributes: new { @class = "control-label" })
+                    <div class="checkbox">
+                        @Html.DropDownListFor(model => model.Include405, truFalseNullList, new { @class = "select2" })
+                        @Html.ValidationMessageFor(model => model.Include405, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Include406, htmlAttributes: new { @class = "control-label" })
+                    <div class="checkbox">
+                        @Html.DropDownListFor(model => model.Include406, truFalseNullList, new { @class = "select2" })
+                        @Html.ValidationMessageFor(model => model.Include406, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-info">
+                        @if ((bool)ViewBag.isEdit)
+                        {
+                            <i class="la la-refresh"></i><text>&nbsp; Изменить &nbsp;</text>
+                        }
+                        else
+                        {
+                            <i class="la la-check"></i><text>&nbsp; Создать &nbsp;</text>
+                        }
+                    </button>
+                </div>
+
+                @Html.ActionLink("Перейти к списку", "Index")
+            </div>
+        </div>
+
+
+    </div>
+}

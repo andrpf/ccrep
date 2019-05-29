@@ -1,0 +1,117 @@
+﻿@using CcRep.Helpers
+@using CcRep.Helpers.BreadCrumbs
+
+@model IEnumerable<CcRep.Models.CcRepUser>
+
+@{
+    Crumbs breadCrumbs = new Crumbs {
+        new Crumb {Name = "Пользователи" },
+        new Crumb {Name = "Список" }
+    };
+
+    ViewBag.Title = "Пользователи";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.BreadCrumbs(breadCrumbs, (string)ViewBag.Title)
+
+@using (Html.BeginCard("Список доступных сущностей"))
+{
+    <table class="DicTableList table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FullName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Locked)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreatedAt)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EndDt)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Locked)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedAt)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndDt)
+                    </td>
+                    <td >
+                        <a data-toggle="tooltip" data-popup="tooltip-custom" data-original-title="Настройка" href="@Url.Action("ManageUserAccess", new { id = item.Id })">
+                            <i class="ft-sliders"></i>
+                        </a>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@section scripts{
+    <script>
+    $.fn.dataTable.ext.type.detect.unshift(
+        function (d) {
+            if (d.indexOf('class="check-box"') != -1) {
+                return 'check-box-grade';
+            }
+            return null
+        }
+    );
+    $.fn.dataTable.ext.type.order['check-box-grade-pre'] = function (d) {
+
+        if (d.indexOf('checked="checked"') != -1) {
+            return 2;
+        } else {
+            return 1;
+        }
+        return 0;
+    };
+        $(window).on('load', function () {
+
+            window.defaultDTable =  $('.DicTableList').DataTable({
+                language: {
+                    url: '/Content/lang/datatables_ru.json'
+                },
+                buttons: [
+
+                ],
+                dom: 'Blfrtip',
+                "pageLength": 10,
+                "bLengthChange": false,
+                aoColumnDefs: [
+                    {
+                        bSortable: false,
+                        aTargets: [-1]
+                    }
+                ]
+            });
+        });
+    </script>
+}

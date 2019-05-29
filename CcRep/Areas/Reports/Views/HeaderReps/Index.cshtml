@@ -1,0 +1,166 @@
+﻿@using CcRep.Helpers
+@using CcRep.Helpers.BreadCrumbs
+
+@model IEnumerable<CcRep.Models.vk.HeaderRep>
+
+@{
+    Crumbs breadCrumbs = new Crumbs {
+        new Crumb {Name = "Работа с отчетами" },
+        new Crumb {Name = "Список" }
+    };
+
+    ViewBag.Title = "Отчеты";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.BreadCrumbs(breadCrumbs, (string)ViewBag.Title)
+
+@using (Html.BeginCard("Список доступных сущностей"))
+{
+    <table class="DicTableList table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.BeginDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EndDate)
+                </th>
+                <th>
+                    Создал
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreateDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th>
+                    Заархивировал
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.ArchiveDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Comment)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BeginDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserCreated.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreateDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserArch.UserName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ArchiveDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Comment)
+                    </td>
+                    <td>
+                        <a data-toggle="tooltip" data-popup="tooltip-custom" data-original-title="Посмотреть" href="@Url.Action("Details", new { id = item.Id })"><i class='ft-eye'></i></a>&nbsp;<a data-toggle="tooltip" data-popup="tooltip-custom" data-original-title="Операции" href="@Url.Action("Index", "Transactions", new { Area = "Reports", Id = item.Id })"><i class='ft-link'></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+@section scripts{
+    <script>
+    $.fn.dataTable.ext.type.detect.unshift(
+        function (d) {
+            if (d.indexOf('class="check-box"') != -1) {
+                return 'check-box-grade';
+            }
+            return null
+        }
+    );
+    $.fn.dataTable.ext.type.order['check-box-grade-pre'] = function (d) {
+
+        if (d.indexOf('checked="checked"') != -1) {
+            return 2;
+        } else {
+            return 1;
+        }
+        return 0;
+    };
+        $(window).on('load', function () {
+
+            window.defaultDTable =  $('.DicTableList').DataTable({
+                language: {
+                    url: '/Content/lang/datatables_ru.json'
+                },
+                buttons: [
+                    {
+                        extend: 'colvis',
+                        className: 'btn btn-secondary btn-outline-info btn-min-width mr-1 mb-1',
+                        columns: ':lt(-1)',
+                        text: 'Показать/Скрыть колонки'
+                    },
+                    {
+                        className: 'btn btn-outline-info btn-min-width mr-1 mb-1',
+                        text: '<i class="la la-plus"></i> '+'Создать',
+                        action: function (e, dt, button, config) {
+                            window.location = '@Url.Action("Create")'
+                        }
+                    }
+                ],
+                dom: 'Blfrtip',
+                "pageLength": 10,
+                "bLengthChange": false,
+                aoColumnDefs: [
+                    {
+                        bSortable: false,
+                        aTargets: [-1]
+                    },
+                    {
+                        render: function (data, type, full, meta) {
+                            var wrappedDataClass = "border-warning warning";
+
+                            switch (data) {
+                                case "CURRENT":
+                                    wrappedDataClass = "border-info info";
+                                    break;
+                                case "ARCHIVE":
+                                    wrappedDataClass = "border-danger danger";
+                                    break;
+                            }
+
+                            return "<div class='badge " + wrappedDataClass + " badge-border'>" + data + "</div>";
+                        },
+                        targets: 5
+                    }
+                ]
+            });
+        });
+    </script>
+}

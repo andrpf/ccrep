@@ -1,0 +1,154 @@
+﻿<#@ template language="C#" HostSpecific="True" #>
+<#@ output extension=".cshtml" #>
+<#@ include file="Imports.include.t4" #>
+@using CcRep.Helpers
+@using CcRep.Helpers.BreadCrumbs
+
+@model IEnumerable<#= "<" + ViewDataTypeName + ">" #>
+
+@{
+    Crumbs breadCrumbs = new Crumbs {
+        new Crumb {Name = "Index" }
+    };
+}
+<#
+// The following chained if-statement outputs the file header code and markup for a partial view, a view using a layout page, or a regular view.
+if(IsPartialView) {
+#>
+
+<#
+} else if(IsLayoutPageSelected) {
+#>
+
+@{
+    ViewBag.Title = "<#= ViewName#>";
+<#
+if (!String.IsNullOrEmpty(LayoutPageFile)) {
+#>
+    Layout = "<#= LayoutPageFile#>";
+<#
+}
+#>
+}
+
+<#
+} else {
+#>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title><#= ViewName #></title>
+</head>
+<body>
+<#
+    PushIndent("    ");
+}
+#>
+@Html.BreadCrumbs(breadCrumbs, "<#= ViewName#>")
+
+@using (Html.BeginCard("Список доступных сущностей"))
+{
+<table class="DicTableList table">
+    <thead>
+    <tr>
+<#
+IEnumerable<PropertyMetadata> properties = ModelMetadata.Properties;
+foreach (PropertyMetadata property in properties) {
+    if (property.Scaffold && !property.IsPrimaryKey && !property.IsForeignKey) {
+#>
+<#
+        // We do not want to show any association properties for which there is
+        // no associated foreign key.
+        if (property.IsAssociation && GetRelatedModelMetadata(property) == null) {
+            continue;
+        }
+#>
+        <th>
+            @Html.DisplayNameFor(model => model.<#= GetValueExpression(property) #>)
+        </th>
+<#
+    }
+}
+#>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+    <tr>
+<#
+foreach (PropertyMetadata property in properties) {
+    if (property.Scaffold && !property.IsPrimaryKey && !property.IsForeignKey) {
+#>
+<#
+        // We do not want to show any association properties for which there is
+        // no associated foreign key.
+        if (property.IsAssociation && GetRelatedModelMetadata(property) == null) {
+            continue;
+        }
+#>
+        <td>
+            @Html.DisplayFor(modelItem => <#= "item." + GetValueExpression(property) #>)
+        </td>
+<#
+    }
+}
+
+string pkName = GetPrimaryKeyName();
+if (pkName != null) {
+#>
+        <td>		
+            <a data-toggle="tooltip" data-popup="tooltip-custom" data-original-title="Изменить" href="@Url.Action("Edit", new { id = item.<#= pkName #> })"><i class='ft-edit-2'></i></a>
+            |
+            <a data-toggle="tooltip" data-popup="tooltip-custom" data-original-title="Посмотреть" href="@Url.Action("Details", new { id = item.<#= pkName #> })"><i class='ft-eye'></i></a>
+            |
+            <a data-toggle="tooltip" data-popup="tooltip-custom" data-original-title="Удалить" href="@Url.Action("Delete", new { id = item.<#= pkName #> })"><i class='red ft-trash-2'></i></a>
+        </td>
+<#
+} else {
+#>
+        <td>
+            <a data-toggle="tooltip" data-popup="tooltip-custom" data-original-title="Изменить" href="@Url.Action("Edit", new { /* id=item.PrimaryKey */ })"><i class='ft-edit-2'></i></a>
+            |
+            <a data-toggle="tooltip" data-popup="tooltip-custom" data-original-title="Посмотреть" href="@Url.Action("Details", new { /* id=item.PrimaryKey */ })"><i class='ft-eye'></i></a>
+            |
+            <a data-toggle="tooltip" data-popup="tooltip-custom" data-original-title="Удалить" href="@Url.Action("Delete", new { /* id=item.PrimaryKey */ })"><i class='red ft-trash-2'></i></a>
+        </td>
+<#
+}
+#>
+    </tr>
+}
+    </tbody>
+</table>
+
+}
+@section scripts{
+
+@Html.Partial("../Shared/DTJsForDicts",
+    new Dictionary<string, string>(2) {
+        { "TableClass", "DicTableList" },
+        { "BtnCreateText", "Добавить" }
+    })
+}
+<#
+// The following code closes the tag used in the case of a view using a layout page and the body and html tags in the case of a regular view page
+#>
+<#
+if(!IsPartialView && !IsLayoutPageSelected) {
+    ClearIndent();
+#>
+
+</body>
+</html>
+<#
+}
+#>
+<#@ include file="ModelMetadataFunctions.cs.include.t4" #>
